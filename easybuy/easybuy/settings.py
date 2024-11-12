@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'easybuy',
+    'eb',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,9 @@ ROOT_URLCONF = 'easybuy.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'eb/templates'],
+        'DIRS': [
+            BASE_DIR / 'eb/templates',  # Template directories here
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,6 +71,12 @@ TEMPLATES = [
         },
     },
 ]
+
+# STATICFILES_DIRS: Use this for your static files directory
+STATICFILES_DIRS = [
+    BASE_DIR / './eb/static',  # for static directory here
+]
+
 
 WSGI_APPLICATION = 'easybuy.wsgi.application'
 
@@ -117,6 +127,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

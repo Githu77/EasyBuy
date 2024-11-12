@@ -1,0 +1,155 @@
+{% extends "eb/main.html" %}
+
+{% block title %} Electronics {% endblock %}
+
+{% block content %}
+
+<h1>This are the electronics godammit!</h1>
+<!-- category_products.html -->
+<!-- category_products.html -->
+<h1>Products in {{ category.name }}</h1>
+<ul>
+    {% for product in products %}
+        <li>{{ product.name }} - ${{ product.price }}</li>
+    {% endfor %}
+</ul>
+
+<div class="flex flex-wrap justify-center">
+    {% for product in products %}
+        <div class="my-4 max-w-sm rounded-lg overflow-hidden shadow-lg w-1/5 bg-white mx-2">
+            <!-- Image Section -->
+            <div class="relative">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-48 object-contain">
+                {% else %}
+                    <div class="w-full h-48 flex items-center justify-center bg-gray-200 text-gray-500">
+                        No Image Available
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Product Info Section -->
+            <div class="p-6">
+                <!-- Product Name -->
+                <h2 class="font-bold text-xl text-gray-800 mb-1">{{ product.name }}</h2>
+
+                <!-- Product Price -->
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-red-500 text-xl font-semibold">Ksh {{ product.price|floatformat:0 }}</span>
+                </div>
+
+                <!-- Stock Quantity -->
+                <p class="text-sm text-gray-500 mb-4">
+                    Stock: 
+                    {% if product.stock_quantity > 0 %}
+                        <span class="text-green-600 font-semibold">{{ product.stock_quantity }}</span> available
+                    {% else %}
+                        <span class="text-red-600 font-semibold">Out of Stock</span>
+                    {% endif %}
+                </p>
+
+                <!-- Product Description -->
+                <p class="text-gray-600 mb-4">{{ product.description|truncatewords:20 }}</p>
+
+                <!-- Add to Cart Button -->
+                <button type="button" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="flex flex-wrap justify-center">
+    {% for product in products %}
+        <div class="my-4 max-w-sm rounded-lg overflow-hidden shadow-lg w-1/5 bg-white mx-2">
+            <!-- Image Section -->
+            <div class="relative">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-48 object-contain">
+                {% else %}
+                    <div class="w-full h-48 flex items-center justify-center bg-gray-200 text-gray-500">
+                        No Image Available
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Product Info Section -->
+            <div class="p-6">
+                <!-- Product Name -->
+                <h2 class="font-bold text-xl text-gray-800 mb-1">{{ product.name }}</h2>
+
+                <!-- Product Price -->
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-red-500 text-xl font-semibold">Ksh {{ product.price|floatformat:0 }}</span>
+                </div>
+
+                <!-- Stock Quantity -->
+                <p class="text-sm text-gray-500 mb-4">
+                    Stock: 
+                    {% if product.stock_quantity > 0 %}
+                        <span class="text-green-600 font-semibold">{{ product.stock_quantity }}</span> available
+                    {% else %}
+                        <span class="text-red-600 font-semibold">Out of Stock</span>
+                    {% endif %}
+                </p>
+
+                <!-- Product Description -->
+                <p class="text-gray-600 mb-4">{{ product.description|truncatewords:20 }}</p>
+
+                <!-- Add to Cart Button -->
+                <button type="button" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<div class="flex flex-wrap justify-center">
+    {% for product in products %}
+        <div class="my-4 max-w-sm rounded-lg overflow-hidden shadow-lg w-1/5 bg-white mx-2">
+            <!-- Image Section -->
+            <div class="relative">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-48 object-contain">
+                {% else %}
+                    <div class="w-full h-48 flex items-center justify-center bg-gray-200 text-gray-500">
+                        No Image Available
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Product Info Section -->
+            <div class="p-6">
+                <!-- Product Name -->
+                <h2 class="font-bold text-xl text-gray-800 mb-1">{{ product.name }}</h2>
+
+                <!-- Product Price -->
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-red-500 text-xl font-semibold">Ksh {{ product.price|floatformat:0 }}</span>
+                </div>
+
+                <!-- Stock Quantity -->
+                <p class="text-sm text-gray-500 mb-4">
+                    Stock: 
+                    {% if product.stock_quantity > 0 %}
+                        <span class="text-green-600 font-semibold">{{ product.stock_quantity }}</span> available
+                    {% else %}
+                        <span class="text-red-600 font-semibold">Out of Stock</span>
+                    {% endif %}
+                </p>
+
+                <!-- Product Description -->
+                <p class="text-gray-600 mb-4">{{ product.description|truncatewords:20 }}</p>
+
+                <!-- Add to Cart Button -->
+                <button type="button" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

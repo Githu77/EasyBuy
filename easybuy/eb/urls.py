@@ -1,6 +1,9 @@
+# eb/urls.py
 from django.urls import path
-from . import views
+from easybuy import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.main, name='main'),
+    path('category/<int:category_id>/', views.category_products, name='category_products'),
+    path('electric/', views.electric, name='electric'),
 ]

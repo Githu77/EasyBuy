@@ -1,0 +1,26 @@
+{
+  "name": "easybuy",
+  "version": "1.0.0",
+  "description": "it's a work in progress more details to come.",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "npx tailwindcss -i ./easybuy/eb/static/input.css -o ./easybuy/eb/static/output.css",
+    "watch:css": "npx tailwindcss -i ./easybuy/eb/static/input.css -o ./easybuy/eb/static/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/Githu77/EasyBuy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Githu77/EasyBuy/issues"
+  },
+  "homepage": "https://github.com/Githu77/EasyBuy#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14"
+  }
+}

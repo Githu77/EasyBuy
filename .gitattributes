@@ -1,0 +1,7 @@
+# Automatically normalize line endings
+* text=auto
+
+# Force LF for shell scripts and other files
+*.sh text eol=lf
+*.json text eol=lf
+*.md text eol=lf
