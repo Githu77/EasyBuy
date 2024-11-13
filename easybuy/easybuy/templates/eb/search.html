@@ -1,0 +1,47 @@
+<!-- easybuy/templates/easybuy/product_search.html -->
+
+{% extends 'eb/main.html' %}
+
+{% block content %}
+    <h2 class="text-3xl font-bold text-center my-4">Search Results</h2>
+    {% if products %}
+        <div class="flex flex-wrap flex-row w-11/12 gap-2 my-2 mx-auto">
+            {% for product in products %}
+                <div class="my-4 max-w-sm rounded-lg overflow-hidden hover:shadow-lg shadow-none border border-gray-200 bg-white mx-2 cursor-pointer">
+                    <div class="relative">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="mt-1 w-full h-48 object-contain">
+                        {% else %}
+                            <div class="w-full h-48 flex items-center justify-center bg-gray-200 text-gray-500">
+                                No Image Available
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="p-6">
+                        <h2 class="font-bold text-xl text-gray-800 mb-1">{{ product.name }}</h2>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-red-500 text-xl font-semibold">$ {{ product.price }}</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">
+                            Stock: 
+                            {% if product.stock_quantity > 0 %}
+                                <span class="text-green-600 font-semibold">{{ product.stock_quantity }}</span> available
+                            {% else %}
+                                <span class="text-red-600 font-semibold">Out of Stock</span>
+                            {% endif %}
+                        </p>
+                        <p class="text-gray-600 mb-4">{{ product.description|truncatewords:10 }}</p>
+                        <!--<button type="button" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors mt-auto" 
+                            onclick="addToCart({{ product.id }})">
+                            Add to Cart
+                        </button>-->
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-gray-600 mt-6">No products found for "{{ query }}".</p>
+    {% endif %}
+{% endblock %}
+

@@ -1,26 +1,27 @@
 {% extends "eb/main.html" %}
 
-{% block title %} Electronics {% endblock %}
+{% block title %} {{ Category }} {% endblock %}
 
 {% block content %}
+<div class="bg-gradient-to-r w-4/5 from-green-400 via-green-700 to-green-400 text-ivory p-6 text-center my-10 mx-auto rounded-md shadow-lg">
+    <h2 class="text-xl font-bold text-white">Special Offers!</h2>
+    <p class="mt-2 text-white">Enjoy 5% off this <span class="font-semibold text-ivory">BLACK FRIDAY</span> on Electronics!</p>
+    <a href="#" class="mt-4 flex gap-2 items-center justify-center mx-auto w-1/6 bg-white text-green-600 font-semibold py-2 px-4 rounded-full hover:bg-green-100 transition">
+        Shop Now
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+        </svg>
+    </a>
+</div>
 
-<h1>This are the electronics godammit!</h1>
-<!-- category_products.html -->
-<!-- category_products.html -->
-<h1>Products in {{ category.name }}</h1>
-<ul>
-    {% for product in products %}
-        <li>{{ product.name }} - ${{ product.price }}</li>
-    {% endfor %}
-</ul>
+<h1 class="text-4xl font-bold text-center text-green-700 mt-8 mb-4">The world of {{ category.name }}</h1>
 
-<div class="flex flex-wrap justify-center">
+<div class="flex flex-wrap flex-row w-11/12 gap-2 my-2 mx-auto">
     {% for product in products %}
-        <div class="my-4 max-w-sm rounded-lg overflow-hidden shadow-lg w-1/5 bg-white mx-2">
-            <!-- Image Section -->
+        <div class="my-4 max-w-sm rounded-lg overflow-hidden hover:shadow-lg shadow-none border border-gray-200 bg-white mx-2 cursor-pointer">
             <div class="relative">
                 {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-48 object-contain">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class=" mt-1 w-full h-48 object-contain">
                 {% else %}
                     <div class="w-full h-48 flex items-center justify-center bg-gray-200 text-gray-500">
                         No Image Available
@@ -28,17 +29,11 @@
                 {% endif %}
             </div>
 
-            <!-- Product Info Section -->
             <div class="p-6">
-                <!-- Product Name -->
                 <h2 class="font-bold text-xl text-gray-800 mb-1">{{ product.name }}</h2>
-
-                <!-- Product Price -->
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-red-500 text-xl font-semibold">Ksh {{ product.price|floatformat:0 }}</span>
+                    <span class="text-red-500 text-xl font-semibold">$ {{ product.price }}</span>
                 </div>
-
-                <!-- Stock Quantity -->
                 <p class="text-sm text-gray-500 mb-4">
                     Stock: 
                     {% if product.stock_quantity > 0 %}
@@ -47,109 +42,13 @@
                         <span class="text-red-600 font-semibold">Out of Stock</span>
                     {% endif %}
                 </p>
-
-                <!-- Product Description -->
-                <p class="text-gray-600 mb-4">{{ product.description|truncatewords:20 }}</p>
-
-                <!-- Add to Cart Button -->
-                <button type="button" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors">
+                <p class="text-gray-600 mb-4">{{ product.description|truncatewords:10 }}</p>
+                <button type="button" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors mt-auto" 
+                        onclick="addToCart({{ product.id }});">
                     Add to Cart
                 </button>
             </div>
         </div>
     {% endfor %}
 </div>
-
-<div class="flex flex-wrap justify-center">
-    {% for product in products %}
-        <div class="my-4 max-w-sm rounded-lg overflow-hidden shadow-lg w-1/5 bg-white mx-2">
-            <!-- Image Section -->
-            <div class="relative">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-48 object-contain">
-                {% else %}
-                    <div class="w-full h-48 flex items-center justify-center bg-gray-200 text-gray-500">
-                        No Image Available
-                    </div>
-                {% endif %}
-            </div>
-
-            <!-- Product Info Section -->
-            <div class="p-6">
-                <!-- Product Name -->
-                <h2 class="font-bold text-xl text-gray-800 mb-1">{{ product.name }}</h2>
-
-                <!-- Product Price -->
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-red-500 text-xl font-semibold">Ksh {{ product.price|floatformat:0 }}</span>
-                </div>
-
-                <!-- Stock Quantity -->
-                <p class="text-sm text-gray-500 mb-4">
-                    Stock: 
-                    {% if product.stock_quantity > 0 %}
-                        <span class="text-green-600 font-semibold">{{ product.stock_quantity }}</span> available
-                    {% else %}
-                        <span class="text-red-600 font-semibold">Out of Stock</span>
-                    {% endif %}
-                </p>
-
-                <!-- Product Description -->
-                <p class="text-gray-600 mb-4">{{ product.description|truncatewords:20 }}</p>
-
-                <!-- Add to Cart Button -->
-                <button type="button" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors">
-                    Add to Cart
-                </button>
-            </div>
-        </div>
-    {% endfor %}
-</div>
-<div class="flex flex-wrap justify-center">
-    {% for product in products %}
-        <div class="my-4 max-w-sm rounded-lg overflow-hidden shadow-lg w-1/5 bg-white mx-2">
-            <!-- Image Section -->
-            <div class="relative">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-48 object-contain">
-                {% else %}
-                    <div class="w-full h-48 flex items-center justify-center bg-gray-200 text-gray-500">
-                        No Image Available
-                    </div>
-                {% endif %}
-            </div>
-
-            <!-- Product Info Section -->
-            <div class="p-6">
-                <!-- Product Name -->
-                <h2 class="font-bold text-xl text-gray-800 mb-1">{{ product.name }}</h2>
-
-                <!-- Product Price -->
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-red-500 text-xl font-semibold">Ksh {{ product.price|floatformat:0 }}</span>
-                </div>
-
-                <!-- Stock Quantity -->
-                <p class="text-sm text-gray-500 mb-4">
-                    Stock: 
-                    {% if product.stock_quantity > 0 %}
-                        <span class="text-green-600 font-semibold">{{ product.stock_quantity }}</span> available
-                    {% else %}
-                        <span class="text-red-600 font-semibold">Out of Stock</span>
-                    {% endif %}
-                </p>
-
-                <!-- Product Description -->
-                <p class="text-gray-600 mb-4">{{ product.description|truncatewords:20 }}</p>
-
-                <!-- Add to Cart Button -->
-                <button type="button" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors">
-                    Add to Cart
-                </button>
-            </div>
-        </div>
-    {% endfor %}
-</div>
-
-
 {% endblock %}

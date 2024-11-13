@@ -33,31 +33,36 @@
         </div>
         <nav class="flex justify-between">
             <div class="p-2">
-                <h1 class=" font-playball text-5xl font-bold text-green-800 hover:text-green-600 cursor-pointer">EasyBuy</h1>
+                <h1 class=" font-playball text-5xl font-bold text-green-800 hover:text-green-600 cursor-pointer"><a href="{% url 'main' %}">EasyBuy</a></h1>
             </div>
             <div>
                 <ul class="flex justify-between p-2">
-                  {% for category in Categories %}
+                  {% for category in categories %}
                     <li class="hover:underline m-4 font-semibold text-gray-600">
                         <a href="{% url 'category_products' category.id %}">{{ category.name }}</a>
-                    <li>
+                    </li>
                   {% endfor %}
                 </ul>
             </div>
             <div class="flex bg-slate-200 rounded-xl m-4 p-2">
-                <input type="text" placeholder="Find products..." class="outline-none  bg-slate-200">
-                <button type="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                    </svg>                      
+              <form method="GET" action="{% url 'product_search' %}" class="flex">
+                <input type="text" name="q" class="bg-slate-200 outline-none" placeholder="Search products..." value="{{ request.GET.q|default_if_none:'' }}">
+                <button type="submit">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                  </svg> 
                 </button>
+              </form>
             </div>         
             <div class="flex p-2">
-                <a href="http://" class="flex m-4 justify-between hover:underline">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                    </svg>                      
-                    <span class="font-semibold text-gray-600">Account</span>
+                <a href="http://" class="flex justify-between m-4 ">
+                  {% if user.profile.image %}
+                      <img  style="width: 30px; height: 30px;" class="w-4 h-4 m-0 rounded-full" src="{{ user.profile.image }}" alt="{{ user.username }}'s profile image">
+                      {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                      {% endif %}
                 </a>
                 <a href="http://" class="flex justify-between m-4 hover:underline">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
@@ -153,4 +158,62 @@
         </div>
       </footer>
 </body>
+<script>
+  function addToCart(productId) {
+      fetch(`/add-to-cart/${productId}/`, {
+          method: 'GET',
+          headers: {
+              'X-Requested-With': 'XMLHttpRequest'
+          }
+      })
+      .then(response => response.json())
+      .then(data => {
+          document.getElementById('cart-count').innerText = data.total_items;
+          alert("Item added to cart!");
+      })
+      .catch(error => console.error('Error:', error));
+  }
+
+  function addToCart(productId) {
+    fetch(`/add-to-cart/${productId}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),
+        },
+        body: JSON.stringify({
+            'product_id': productId,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error); // Show error if item is out of stock
+        } else {
+            // Update the cart item count dynamically
+            document.getElementById('cart-item-count').innerText = data.total_items;
+            alert(data.message); // Show success message
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// Function to get the CSRF token from the cookie for the AJAX request
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+  </script>  
 </html>

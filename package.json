@@ -4,8 +4,8 @@
   "description": "it's a work in progress more details to come.",
   "main": "index.js",
   "scripts": {
-    "build:css": "npx tailwindcss -i ./easybuy/eb/static/input.css -o ./easybuy/eb/static/output.css",
-    "watch:css": "npx tailwindcss -i ./easybuy/eb/static/input.css -o ./easybuy/eb/static/output.css --watch"
+    "build:css": "npx tailwindcss -i ./easybuy/easybuy/static/input.css -o ./easybuy/static/output.css",
+    "watch:css": "npx tailwindcss -i ./easybuy/easybuy/static/input.css -o ./easybuy/static/output.css --watch"
   },
   "repository": {
     "type": "git",

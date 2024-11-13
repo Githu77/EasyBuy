@@ -1,0 +1,18 @@
+<!-- easybuy/templates/easybuy/cart.html -->
+
+<h1>Your Cart</h1>
+<div>
+    {% if cart.items.exists %}
+        {% for item in cart.items.all %}
+            <div>
+                <p>{{ item.product.name }}</p>
+                <p>Quantity: {{ item.quantity }}</p>
+                <p>Price: Ksh {{ item.product.price * item.quantity }}</p>
+            </div>
+        {% endfor %}
+        <p>Total Price: Ksh {{ cart.total_price }}</p>
+        <a href="{% url 'checkout' %}">Proceed to Checkout</a>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+</div>

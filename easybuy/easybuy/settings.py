@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import os
+import certifi
+os.environ['SSL_CERT_FILE'] = certifi.where()
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'easybuy',
     'eb',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,9 +62,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',  # Add this if required by allauth
 ]
 
+
 ROOT_URLCONF = 'easybuy.urls'
+
+SITE_ID = 1
 
 TEMPLATES = [
     {
@@ -76,6 +92,10 @@ TEMPLATES = [
 STATICFILES_DIRS = [
     BASE_DIR / './eb/static',  # for static directory here
 ]
+
+STATIC_URL = 'eb/static/'
+STATICFILES_DIRS = [BASE_DIR / "eb/static"]  # Or your project's static folder
+
 
 
 WSGI_APPLICATION = 'easybuy.wsgi.application'
@@ -110,6 +130,45 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# allauth settings for email verification
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_USERNAME_REQUIRED = False  # Use email instead of username for login
+LOGIN_REDIRECT_URL = '/'  # Redirect after login
+LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
+
+
+# Ensure this is placed in the appropriate section of your settings
+SOCIALACCOUNT_ADAPTER = 'easybuy.adapters.MySocialAccountAdapter'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+        'APP': {
+            'client_id': '727849447754-0pjbqlusb82fh3effsld603q8gbbq5mj.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -135,3 +194,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SOCIALACCOUNT_ADAPTER = 'easybuy.adapters.MySocialAccountAdapter'
