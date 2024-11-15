@@ -147,8 +147,7 @@
                   <h2 class="text-2xl font-semibold my-4 text-center text-green-700 ">Popular {{ category.name }}</h2>
                   <div class="flex flex-wrap flex-row w-11/12 gap-4 mx-auto">
                       {% for product in products %}
-                      <div class="my-4 max-w-sm rounded-lg overflow-hidden hover:shadow-lg shadow-none border border-gray-200 bg-white mx-2 cursor-pointer"
-                      onclick="goToProductDetails('{{ product.id }}');">                              
+                      <div class="my-4 max-w-sm rounded-lg overflow-hidden hover:shadow-lg shadow-none border border-gray-200 bg-white mx-2 cursor-pointer">                              
                       <div class="relative">
                                   {% if product.image %}
                                     <div class="w-full h-48  overflow-hidden rounded-lg">
