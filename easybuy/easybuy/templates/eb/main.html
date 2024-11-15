@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playball&display=swap" rel="stylesheet">
 </head>
 </head>
-<body>
+<body class="bg-ivory">
     <header class=" bg-white sticky top-0 left-0 w-full z-50 border-b border-gray-200">
         <div class="flex justify-between bg-green-700 p-2 text-ivory">
             <div class="flex ml-4 font-semibold">
@@ -64,19 +64,121 @@
                         </svg>
                       {% endif %}
                 </a>
-                <a href="http://" class="flex justify-between m-4 hover:underline">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
+                <a href="{% url 'cart' %}" class="flex items-center m-4 p-1 rounded-lg hover:bg-slate-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 ">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                    </svg>                      
-                    <span class="font-semibold text-gray-600">Cart</span>
+                    </svg>
+                    <div id="cart-count" class=" -top-8 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">{{ total_items }}</div>
                 </a>
             </div>
         </nav>
     </header>
-
     <main>
-        {% block content %}
-        {% endblock %}
+      
+      {% block content %}
+      <div class="bg-contain my-10 mx-2 rounded-lg p-4" style="background-image: url('https://i.ibb.co/grdgLfM/bg.png');">
+        <div class="flex justify-between">
+            <div class="text-ivory">
+                <h1 class="my-4 text-4xl font-bold">Welcome to EasyBuy</h1>
+                <h2 class="text-2xl font-bold">Discover Amazing Deals on Products You'll Love</h2>
+                <h3 class="text-xl font-semibold my-4">Best offer on Furniture goods, Discover more deals this festive season</h3>
+                <button type="button" class="bg-white text-green-700 hover:bg-gray-300 flex justify-between rounded-lg p-2 my-6">
+                    More Offers!
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 ml-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                    </svg>                      
+                </button>
+            </div>
+            
+            <div class="flex justify-between">
+                <div class="relative max-w-xs p-4 m-4 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out">
+                    <div class="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold uppercase px-2 py-1 rounded-full">
+                        Sale
+                    </div>
+                    <img src="https://i.ibb.co/YyM3mq7/pexels-pixabay-280471.jpg" alt="Product Image" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="text-center">
+                        <h2 class="text-lg font-bold text-gray-900 mb-1">
+                            Limited Time Offer!
+                        </h2>
+                        <p class="text-red-500 text-xl font-semibold">
+                            20% Off Today Only!
+                        </p>
+                    </div>
+                    <div class="mt-4 flex justify-center">
+                        <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-full">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+                <div class="relative max-w-xs p-4 m-4 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out">
+                    <div class="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold uppercase px-2 py-1 rounded-full">
+                        Sale
+                    </div>
+                    <img src="https://i.ibb.co/ZdmfxLn/chairs.jpg" alt="Product Image" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="text-center">
+                        <h2 class="text-lg font-bold text-gray-900 mb-1">
+                            Limited Time Offer!
+                        </h2>
+                        <p class="text-red-500 text-xl font-semibold">
+                            20% Off Today Only!
+                        </p>
+                    </div>
+                    <div class="mt-4 flex justify-center">
+                        <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-full">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class=" text-green-700 flex justify-end">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="size-6 rounded-full p-1 mx-4 bg-ivory hover:bg-gray-200">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="size-6 rounded-full p-1 mx-4 bg-ivory hover:bg-gray-200">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>                  
+        </div>
+      </div>
+      <div class="">
+          {% for category, products in category_products.items %}
+              <div class="mb-12">
+                  <h2 class="text-2xl font-semibold my-4 text-center text-green-700 ">Popular {{ category.name }}</h2>
+                  <div class="flex flex-wrap flex-row w-11/12 gap-4 mx-auto">
+                      {% for product in products %}
+                      <div class="my-4 max-w-sm rounded-lg overflow-hidden hover:shadow-lg shadow-none border border-gray-200 bg-white mx-2 cursor-pointer"
+                      onclick="goToProductDetails('{{ product.id }}');">                              
+                      <div class="relative">
+                                  {% if product.image %}
+                                    <div class="w-full h-48  overflow-hidden rounded-lg">
+                                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="p-2 w-full h-48 object-contain">
+                                    </div>
+                                  {% else %}
+                                      <div class="w-full h-48 flex items-center justify-center bg-gray-200 text-gray-500">
+                                          No Image Available
+                                      </div>
+                                  {% endif %}
+                              </div>
+      
+                              <div class="p-6">
+                                  <h3 class="font-bold text-xl text-gray-800 mb-1">{{ product.name }}</h3>
+                                  <div class="flex items-center justify-between mb-2">
+                                      <span class="text-red-500 text-xl font-semibold">Ksh {{ product.price }}</span>
+                                  </div>
+                                  <p class="text-gray-600 mb-4">{{ product.description|truncatewords:10 }}</p>
+                                  <button type="button" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors mt-auto" 
+                                          onclick="addToCart('{{ product.id }}')">
+                                      Add to Cart
+                                  </button>
+                              </div>
+                          </div>
+                      {% endfor %}
+                  </div>
+              </div>
+          {% endfor %}
+      </div>
+      {% endblock %}      
     </main>
 
     <footer class="bg-ivory border-t border-gray-200 text-gray-700 py-10">
@@ -157,63 +259,27 @@
           </div>
         </div>
       </footer>
+      <script>
+        function addToCart(productId) {
+          fetch(`/add-to-cart/${productId}/`, {
+              method: 'GET',
+              headers: {
+                  'X-Requested-With': 'XMLHttpRequest'
+              }
+          })
+          .then(response => response.json())
+          .then(data => {
+              document.getElementById('cart-count').innerText = data.total_items;
+              console.log('Product ID:', data.product_id);
+              alert("Item added to cart!");
+          })
+          .catch(error => console.error('Error:', error));
+      }
+
+      function goToProductDetails(productId) 
+      { 
+        window.location.href = `/product/${productId}/`; 
+      }
+      </script>
 </body>
-<script>
-  function addToCart(productId) {
-      fetch(`/add-to-cart/${productId}/`, {
-          method: 'GET',
-          headers: {
-              'X-Requested-With': 'XMLHttpRequest'
-          }
-      })
-      .then(response => response.json())
-      .then(data => {
-          document.getElementById('cart-count').innerText = data.total_items;
-          alert("Item added to cart!");
-      })
-      .catch(error => console.error('Error:', error));
-  }
-
-  function addToCart(productId) {
-    fetch(`/add-to-cart/${productId}/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken'),
-        },
-        body: JSON.stringify({
-            'product_id': productId,
-        }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            alert(data.error); // Show error if item is out of stock
-        } else {
-            // Update the cart item count dynamically
-            document.getElementById('cart-item-count').innerText = data.total_items;
-            alert(data.message); // Show success message
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-
-// Function to get the CSRF token from the cookie for the AJAX request
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-  </script>  
 </html>

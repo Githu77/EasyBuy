@@ -1,18 +1,58 @@
-<!-- easybuy/templates/easybuy/cart.html -->
+{% extends "eb/main.html" %}
 
-<h1>Your Cart</h1>
-<div>
-    {% if cart.items.exists %}
-        {% for item in cart.items.all %}
-            <div>
-                <p>{{ item.product.name }}</p>
-                <p>Quantity: {{ item.quantity }}</p>
-                <p>Price: Ksh {{ item.product.price * item.quantity }}</p>
+{% block title %}Your Cart{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-playball my-4 font-bold text-center text-green-600">Your Shopping Cart</h1>
+<div class="container mx-auto my-8 bg-ivory border border-gray-200 p-6 rounded-lg shadow-md">
+    <div class="flex flex-col space-y-2">
+        {% for item in cart_items %}
+            <div class="flex justify-between bg-white p-4 rounded-lg shadow-sm">
+                <div class="flex items-center w-1/2">
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class=" mt-1 w-20 h-32 object-contain">
+                    <div class="ml-4">
+                        <h2 class="text-lg font-semibold text-gray-800">{{ item.product.name }}</h2>
+                        <p class="text-sm text-gray-500">Price: $ {{ item.product.price }}</p>
+                        <p class="text-sm text-gray-500">Quantity: {{ item.quantity }}</p>
+                    </div>
+                </div>
+                <div class="flex text-lg items-center font-semibold text-green-600">
+                    Total: $ {{ item.total_price }}
+                </div>
+                <div class="flex items-center">
+                    <button type="button" class=" text-ivory bg-red-500 hover:bg-red-400 p-2 font-bold rounded-md" onclick="removeFromCart('{{ item.product.id }}')">
+                        Remove
+                    </button>
+                </div>
             </div>
+        {% empty %}
+            <p class="text-center text-gray-500">Your cart is currently empty.</p>
         {% endfor %}
-        <p>Total Price: Ksh {{ cart.total_price }}</p>
-        <a href="{% url 'checkout' %}">Proceed to Checkout</a>
-    {% else %}
-        <p>Your cart is empty.</p>
-    {% endif %}
+    </div>
+    <div class="flex justify-end mt-8">
+        <a href="{% url 'checkout' %}" class="bg-green-600 hover:bg-green-700 mx-auto text-white font-bold px-6 py-3 rounded-lg transition duration-300">
+            Proceed to Checkout
+        </a>
+    </div>
 </div>
+<script>
+    function removeFromCart(productId) {
+        fetch(`/remove-from-cart/${productId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload(); // Reloads the page to reflect cart updates
+            } else {
+                alert(data.error || 'Could not remove item from cart.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    </script>
+{% endblock %}

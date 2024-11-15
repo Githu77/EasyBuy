@@ -14,14 +14,16 @@
     </a>
 </div>
 
-<h1 class="text-4xl font-bold text-center text-green-700 mt-8 mb-4">The world of {{ category.name }}</h1>
+<h1 class="text-4xl font-bold text-center font-playball text-green-700 mt-8 mb-4"> {{ category.name }}</h1>
 
 <div class="flex flex-wrap flex-row w-11/12 gap-2 my-2 mx-auto">
     {% for product in products %}
-        <div class="my-4 max-w-sm rounded-lg overflow-hidden hover:shadow-lg shadow-none border border-gray-200 bg-white mx-2 cursor-pointer">
+        <!-- Wrap the entire product card div with an onclick that navigates to the product details page -->
+        <div class="my-4 max-w-sm rounded-lg overflow-hidden hover:shadow-lg shadow-none border border-gray-200 bg-white mx-2 cursor-pointer"
+        onclick="goToProductDetails('{{ product.id }}');">
             <div class="relative">
                 {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class=" mt-1 w-full h-48 object-contain">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="p-2 w-full h-48 object-contain">
                 {% else %}
                     <div class="w-full h-48 flex items-center justify-center bg-gray-200 text-gray-500">
                         No Image Available
@@ -43,10 +45,6 @@
                     {% endif %}
                 </p>
                 <p class="text-gray-600 mb-4">{{ product.description|truncatewords:10 }}</p>
-                <button type="button" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors mt-auto" 
-                        onclick="addToCart({{ product.id }});">
-                    Add to Cart
-                </button>
             </div>
         </div>
     {% endfor %}

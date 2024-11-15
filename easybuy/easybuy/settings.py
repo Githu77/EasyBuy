@@ -12,9 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
-import os
+import ssl
 import certifi
-os.environ['SSL_CERT_FILE'] = certifi.where()
 
 
 
@@ -65,6 +64,11 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',  # Add this if required by allauth
 ]
 
+# easybuy/settings.py
+PAYPAL_CLIENT_ID = 'ASBBFcmPF1NcZanZ_vTnZBkr20zRBAC0y9_yU1e-nuHOhDBGzCuTW8VUNzFTF2BKNtat7eUokq7XK-KS'
+PAYPAL_CLIENT_SECRET = 'EH1qyVwpBb65y8lbf1rGUkq3M1NlrqKVgW34rSDvAMcTVj-oLG63-SayqNqUGCMMoN124p6zEmzphpVa'
+PAYPAL_MODE = 'sandbox'  # 'live' for production
+
 
 ROOT_URLCONF = 'easybuy.urls'
 
@@ -89,12 +93,8 @@ TEMPLATES = [
 ]
 
 # STATICFILES_DIRS: Use this for your static files directory
-STATICFILES_DIRS = [
-    BASE_DIR / './eb/static',  # for static directory here
-]
-
-STATIC_URL = 'eb/static/'
-STATICFILES_DIRS = [BASE_DIR / "eb/static"]  # Or your project's static folder
+STATIC_URL = '/static/' 
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 
 
@@ -147,7 +147,6 @@ LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
 # Ensure this is placed in the appropriate section of your settings
 SOCIALACCOUNT_ADAPTER = 'easybuy.adapters.MySocialAccountAdapter'
 
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -156,6 +155,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
+EMAIL_SSL_CONTEXT = ssl.create_default_context(cafile=certifi.where())
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
