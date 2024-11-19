@@ -142,4 +142,3 @@ EasyBuy is licensed under the MIT License. See the LICENSE file for more informa
 - **Usage:** How to run the development server and access the admin panel.
 - **Deployment:** Basic instructions for deploying the project on PythonAnywhere.
 - **Contributing and License:** Information on contributing to the project and its licensing.
-
