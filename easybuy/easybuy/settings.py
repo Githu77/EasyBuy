@@ -25,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!+d^^ky*80eh@yl*z-(h4qhn9*b8wpmnl9#%(3jnxs)b25kg1^'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -63,11 +63,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',  # Add this if required by allauth
 ]
-
-# easybuy/settings.py
-PAYPAL_CLIENT_ID = 'ASBBFcmPF1NcZanZ_vTnZBkr20zRBAC0y9_yU1e-nuHOhDBGzCuTW8VUNzFTF2BKNtat7eUokq7XK-KS'
-PAYPAL_CLIENT_SECRET = 'EH1qyVwpBb65y8lbf1rGUkq3M1NlrqKVgW34rSDvAMcTVj-oLG63-SayqNqUGCMMoN124p6zEmzphpVa'
-PAYPAL_MODE = 'sandbox'  # 'live' for production
 
 
 ROOT_URLCONF = 'easybuy.urls'
@@ -169,7 +164,12 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+SECRET_KEY = os.getenv('SECRET_KEY')
 
+# easybuy/settings.py
+PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID')
+PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET')
+PAYPAL_MODE = 'sandbox'  # 'live' for production
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
